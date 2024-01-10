@@ -1,23 +1,25 @@
 import React from 'react'
 import { Box, styled } from '@mui/material'
 import headerImage from '../images/work.jpg'
+import SearchInputEl from './SearchInputEl';
 
 const Header = () => {
 
-  const StyleHeader = styled(Box)(({theme }) =>(
+  const StyleHeader = styled(Box)(({ theme }) =>(
     {
-        dispaly: "flex",
-        justifyContent: "center",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         minHeight: 400,
         backgroundImage: `url(${headerImage})`,
-        backgroundPosition: "center",
+        backgroundPosition: 'center',
         backgroundColor: theme.palette.secondary.main
     }
   ));
   return (
    <>
         <StyleHeader >
-            
+            <SearchInputEl/>
         </StyleHeader>
    </>
   )
