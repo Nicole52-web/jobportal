@@ -1,9 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import { composeWithDevTools } from '@redux-devtools/extension';
-import { loadJobReducer } from './reducers/jobReducers';
+import { loadJobReducer, loadJobSingleReducer } from './reducers/jobReducers';
 import { loadJobTypeReducer } from './reducers/jobTypeReducer';
-import { userReducerLogout, userReducerProfile, userReducerSignIn } from './reducers/userReducer';
+import { allUserReducer, userApplyJobReducer, userReducerLogout, userReducerProfile, userReducerSignIn, userReducerSignUp } from './reducers/userReducer';
+import { modeReducer } from './reducers/themeModeReducer';
 
 
 
@@ -13,7 +14,12 @@ const reducer = combineReducers({
     jobTypeAll: loadJobTypeReducer,
     signIn: userReducerSignIn,
     logOut: userReducerLogout,
-    userProfile: userReducerProfile
+    userProfile: userReducerProfile,
+    singleJob: loadJobSingleReducer,
+    userJobApplication: userApplyJobReducer,
+    allUsers: allUserReducer,
+    mode: modeReducer,
+    signUp: userReducerSignUp
 });
 
 
@@ -22,7 +28,8 @@ const reducer = combineReducers({
 let initialState = {
     signIn: {
         userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
-    }
+    },
+    mode: "light"
 };
 let middleware = [thunk];
 const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)));

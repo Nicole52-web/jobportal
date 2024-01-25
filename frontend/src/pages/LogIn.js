@@ -7,7 +7,7 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { userSignInAction } from '../redux/actions/userAction'
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 const validationSchema = yup.object({
@@ -26,11 +26,19 @@ const validationSchema = yup.object({
 const LogIn = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { isAuthenticated } = useSelector(state => state.signIn);
+    const { isAuthenticated, userInfo } = useSelector(state => state.signIn);
     useEffect(()=>{
-        if (isAuthenticated){
-            navigate('/user/dashboard');
+        if (isAuthenticated) {
+            if (userInfo.role === 1) {
+
+                navigate('/admin/dashboard');
+            }else {
+                navigate('/user/dashboard');
+            }
         }
+        // if (isAuthenticated){
+        //     navigate('/user/dashboard');
+        // }
     },[isAuthenticated])
 
     const formik = useFormik({
@@ -90,6 +98,9 @@ const LogIn = () => {
                     helperText={formik.touched.password && formik.errors.password}
                 />
                 <Button fullWidth variant='contained' type='submit'>Log In</Button>
+
+               <h4 style={{ mt: 3 }}> Don't have an account?</h4> <Link to="/register" style={{ color: "blue", textDecoration: "none"}} >Sign Up</Link>
+
             </Box>
         </Box>
     </Box>

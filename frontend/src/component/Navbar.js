@@ -16,9 +16,15 @@ import { useTheme } from '@emotion/react';
 import { Link, useNavigate } from 'react-router-dom'
 import { userLogoutAction } from '../redux/actions/userAction';
 import { useDispatch, useSelector } from 'react-redux';
+import { toggleActionTheme } from '../redux/actions/themeAction';
+import { DarkMode, LightMode } from '@mui/icons-material'
 
-const pages = ['Home', 'Log In'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = [
+  <Link to="/" style={{ color: "black", textDecoration: "none"}}>Home</Link>,
+  <Link to="/login" style={{ color: "black", textDecoration: "none"}}>Log In</Link>,
+  <Link to="/register" style={{ color: "black", textDecoration: "none"}}>Sign Up</Link>
+];
+
 
 const Navbar = () => {
 
@@ -59,15 +65,15 @@ const Navbar = () => {
   }
 
   return (
-    <AppBar position="static">
-      <Container maxWidth="xl">
+    <AppBar position="static" sx={{ bgcolor: palette.primary.main}}>
+      <Container >
         <Toolbar disableGutters>
           <WorkIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -124,7 +130,7 @@ const Navbar = () => {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href=""
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -145,21 +151,45 @@ const Navbar = () => {
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                <Link to="/" style={{ color: 'white', textDecoration: "none" }}>
+                <Link to="/" style={{ color: 'white', textDecoration: "none"}}>
                 Home
                     </Link> 
             
               </Button>
+              <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}>
+                            <Link to="/register" style={{ color: 'white', textDecoration: "none" }}>
+                                Sign up
+                            </Link>
+                        </Button>
         
           </Box>
 
+          {/* toggle dark theme
+          <IconButton sx={{ mr: 4 }} onClick={() => dispatch(toggleActionTheme())}>
+                        {palette.mode === "dark" ? (
+                            <DarkMode sx={{ color: "#ffffff", fontSize: "25px" }} />
+                        ) : (
+                            <LightMode sx={{ color: "#ffffff", fontSize: "25px" }} />
+                        )}
+                    </IconButton> */}
+
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt="Remy Sharp" src="" />
               </IconButton>
             </Tooltip>
             <Menu
+              PaperProps={{
+                sx:{
+                  "& .MuiMenu-list": {
+                    bgcolor: "primary.white",
+                    color: "white"
+                  },
+                }
+              }}
               sx={{ mt: '45px' }}
               id="menu-appbar"
               anchorEl={anchorElUser}
@@ -176,8 +206,12 @@ const Navbar = () => {
               onClose={handleCloseUserMenu}
             >
           <MenuItem onClick={handleCloseUserMenu}>
-                                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/admin/dashboard">Dashboard</Link></Typography>
+                                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/admin/dashboard">Admin Dashboard</Link></Typography>
                             </MenuItem>
+          <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center"><Link style={{ textDecoration: "none", color: palette.primary.main }} to="/user/dashboard">User Dashboard</Link></Typography>
+                            </MenuItem>
+                            
 
                             {
 
