@@ -12,4 +12,6 @@ Log In/Sign Up form with Formic and Yup for validation
 Authentication system with JWT an cookie
 Search, Filter jobs by category and location
 Apply for a job in single page job, if user is logged in
+User File upload 
+Admin File Download
 Toast Notification
