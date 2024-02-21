@@ -43,6 +43,27 @@ export const userSignUpAction = (user) => async (dispatch) => {
       toast.error(error.response.data.error);
   }
 }
+
+// user contactpage
+export const userContactAction = (user) => async (dispatch) => {
+  dispatch({ type: USER_SIGNUP_REQUEST });
+  try {
+      const { data } = await axios.post("/api/", user);
+
+      dispatch({
+          type: USER_SIGNUP_SUCCESS,
+          payload: data
+      });
+      toast.success("Sent Successfully!");
+  } catch (error) {
+      dispatch({
+          type: USER_SIGNUP_FAIL,
+          payload: error.response.data.error
+      });
+      toast.error(error.response.data.error);
+  }
+}
+
 export const userLogoutAction = (user) => async(dispatch) =>{
   dispatch({ type: USER_LOGOUT_REQUEST});
   try {

@@ -10,7 +10,7 @@ import AddIcon from '@mui/icons-material/Add';
 const CardElement = ({ jobTitle, description, category, location, id}) => {
     const { palette } = useTheme();
     return (
-        <Card sx={{ minWidth: 275, mb: 3, mt: 3}}>
+        <Card sx={{ minWidth: 275, mb: 3, mt: 3, bgcolor: palette.primary.white }}>
 
             <CardContent>
                 <Typography sx={{ fontSize: 15, color: palette.secondary.main, fontWeight: 500}} gutterBottom>
@@ -23,7 +23,7 @@ const CardElement = ({ jobTitle, description, category, location, id}) => {
 
             </CardContent>
             <CardActions>
-                <Button disableElevation variant='contained' size='small' startIcon={ <AddIcon/>}> <Link style={{ textDecoration: "none", color: "white", boxShadow: 0 }} to={`/job/${id}`}>More Details</Link></Button>
+                <Button disableElevation variant='contained' size='small' startIcon={ <AddIcon/>}> <Link style={{ textDecoration: "none", color: "white", boxShadow: 0 }} to={`/job/${id}`} >More Details </Link></Button>
             </CardActions>
 
         </Card>     

@@ -12,6 +12,7 @@ const Header = () => {
         alignItems: 'center',
         minHeight: 400,
         backgroundImage: `url(${headerImage})`,
+        backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundColor: theme.palette.secondary.main
     }

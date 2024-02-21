@@ -22,7 +22,8 @@ import { DarkMode, LightMode } from '@mui/icons-material'
 const pages = [
   <Link to="/" style={{ color: "black", textDecoration: "none"}}>Home</Link>,
   <Link to="/login" style={{ color: "black", textDecoration: "none"}}>Log In</Link>,
-  <Link to="/register" style={{ color: "black", textDecoration: "none"}}>Sign Up</Link>
+  <Link to="/register" style={{ color: "black", textDecoration: "none"}}>Sign Up</Link>,
+  <Link to="/contact" style={{ color: "black", textDecoration: "none"}}>Contact Us</Link>
 ];
 
 
@@ -163,6 +164,13 @@ const Navbar = () => {
                                 Sign up
                             </Link>
                         </Button>
+              <Button
+                            onClick={handleCloseNavMenu}
+                            sx={{ my: 2, color: 'white', display: 'block' }}>
+                            <Link to="/contact" style={{ color: 'white', textDecoration: "none" }}>
+                                Contact Us
+                            </Link>
+                        </Button>
         
           </Box>
 
@@ -178,7 +186,7 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="" />
+                <Avatar sx={{ color: palette.primary.white }} alt="Remy Sharp" src="" />
               </IconButton>
             </Tooltip>
             <Menu

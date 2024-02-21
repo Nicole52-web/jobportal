@@ -1,60 +1,74 @@
 import React, { useEffect } from 'react'
-import { Box, Button, IconButton, Paper, Typography } from '@mui/material'
-import { DataGrid, gridClasses, GridToolbar } from '@mui/x-data-grid';
+import { Box, Button, Paper, Typography } from '@mui/material'
+import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
-import moment from 'moment'
-import { allUserAction } from '../../redux/actions/userAction';
+import { deleteJobTypeAction, jobTypeLoadAction, updateJobTypeAction } from '../../redux/actions/jobTypeAction';
 
-const DashUsers = () => {
+import moment from 'moment'
+
+
+const DashCategory = () => {
+
 
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(allUserAction());
+        dispatch(jobTypeLoadAction())
     }, []);
 
-    const { users, loading } = useSelector(state => state.allUsers);
-    let data = [];
-    data = (users !== undefined && users.length > 0) ? users : []
 
-    const deleteUserById = (e, id) => {
-        console.log(id);
+    const { success: deleteSuccess } = useSelector(state => state.deleteJob)
+    const { jobType, loading } = useSelector(state => state.jobTypeAll);
+    let data = [];
+    data = (jobType !== undefined && jobType.length > 0) ? jobType : []
+
+    //delete job by Id
+    const deleteJobCategoryById = (e, id) => {
+        if (window.confirm(`You really want to delete product ID "${id}" ?`)){
+            dispatch(deleteJobTypeAction(id));
+            if( deleteSuccess && deleteSuccess === true ){
+                dispatch(jobTypeLoadAction())
+            }
+        }
     }
 
-  
+    const { success: updateSuccess } = useSelector(state => state.updateJobType)
+    const updateJobCategoryById = (e,id) => {
+        if (window.confirm(`You really want to update product Id "${id}"`)){
+            if ( updateSuccess && updateSuccess === true ){
+                dispatch(jobTypeLoadAction())
+            }
+        }
+    }    
+    
+
+
+
+    
+
     const columns = [
 
         {
             field: '_id',
-            headerName: 'User ID',
+            headerName: 'Category ID',
             width: 150,
             editable: true,
         },
-
         {
-            field: 'email',
-            headerName: 'Email',
+            field: 'jobTypeName',
+            headerName: 'Category',
             width: 150,
         },
-
-        {
-            field: 'role',
-            headerName: 'User status',
-            width: 150,
-            renderCell: (params) => (
-                params.row.role === 1 ? "Admin" : "Regular user"
-            )
-        },
-
         {
             field: 'createdAt',
-            headerName: 'Creation date',
+            headerName: 'Created At',
             width: 150,
             renderCell: (params) => (
                 moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS')
             )
+
         },
 
         {
@@ -62,8 +76,8 @@ const DashUsers = () => {
             width: 200,
             renderCell: (values) => (
                 <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
-                    <Button variant="contained"><Link style={{ color: "white", textDecoration: "none" }} to={`/admin/edit/user/${values.row._id}`}>Edit</Link></ Button>
-                    < Button onClick={(e) => deleteUserById(e, values.row._id)} variant="contained" color="error">Delete</ Button>
+                    <Button variant="contained" onClick={(e) => updateJobCategoryById(e, values.row._id)}><Link style={{ color: "white", textDecoration: "none" }} to={'/admin/edit/category'}>Edit</Link></ Button>
+                    < Button onClick={(e) => deleteJobCategoryById(e, values.row._id)} variant="contained" color="error">Delete</ Button>
                 </Box>
             )
         }
@@ -71,19 +85,19 @@ const DashUsers = () => {
 
 
     return (
-    <>
         <Box >
 
             <Typography variant="h4" sx={{ color: "white", pb: 3 }}>
-                All users
+                Jobs category
             </Typography>
             <Box sx={{ pb: 2, display: "flex", justifyContent: "right" }}>
-                <Button variant='contained' color="success" startIcon={<AddIcon />}> Create user</Button>
+                <Button variant="contained" color="success" startIcon={<AddIcon />}><Link style={{ color: "white", textDecoration: "none" }} to='/admin/category/create'>Create category</Link></ Button>
             </Box>
             <Paper sx={{ bgcolor: "secondary.midNightBlue" }} >
 
                 <Box sx={{ height: 400, width: '100%' }}>
                     <DataGrid
+                        getRowId={(row) => row._id}
                         sx={{
 
                             '& .MuiTablePagination-displayedRows': {
@@ -100,20 +114,18 @@ const DashUsers = () => {
                             }
 
                         }}
-                        getRowId={(row) => row._id}
                         rows={data}
                         columns={columns}
                         pageSize={3}
                         rowsPerPageOptions={[3]}
                         checkboxSelection
-                        slots={{ toolbar: GridToolbar }}
+                    // components={{ Toolbar: GridToolbarExport }}
                     />
                 </Box>
             </Paper>
 
         </Box>
-    </>
-)
-
+    )
 }
-export default DashUsers
+
+export default DashCategory

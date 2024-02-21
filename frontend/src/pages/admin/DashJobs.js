@@ -4,7 +4,7 @@ import { DataGrid, gridClasses } from '@mui/x-data-grid';
 import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
-import { jobLoadAction } from '../../redux/actions/jobAction';
+import { deleteSingleJobAction, editJobAction, jobLoadAction } from '../../redux/actions/jobAction';
 
 
 
@@ -18,6 +18,7 @@ const DashJobs = () => {
     }, []);
 
 
+    const { success: deleteSuccess } = useSelector(state => state.deleteJob);
     const { jobs, loading } = useSelector(state => state.loadJobs);
     let data = [];
     data = (jobs !== undefined && jobs.length > 0) ? jobs : []
@@ -25,8 +26,15 @@ const DashJobs = () => {
 
     //delete job by Id
     const deleteJobById = (e, id) => {
-        console.log(id)
+        if (window.confirm(`You really want to delete product ID: "${id}" ?`)){
+            dispatch(deleteSingleJobAction(id));
+            if (deleteSuccess && deleteSuccess === true){
+                dispatch(jobLoadAction())
+            }
+        }
     }
+
+    
 
     const columns = [
 
@@ -79,7 +87,7 @@ const DashJobs = () => {
             width: 200,
             renderCell: (values) => (
                 <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
-                    <Button variant="contained"><Link style={{ color: "white", textDecoration: "none" }} to={`/admin/edit/job/${values.row._id}`}>Edit</Link></ Button>
+                    <Button variant="contained"><Link style={{ color: "white", textDecoration: "none" }} to={'/admin/edit/job'}>Edit</Link></ Button>
                     < Button onClick={(e) => deleteJobById(e, values.row._id)} variant="contained" color="error">Delete</ Button>
                 </Box>
             )

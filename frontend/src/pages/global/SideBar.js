@@ -6,6 +6,8 @@ import { Box, Button, IconButton, useTheme } from '@mui/material';
 import WorkIcon from '@mui/icons-material/Work';
 import CategoryIcon from '@mui/icons-material/Category';
 import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
+import FileUploadIcon from '@mui/icons-material/FileUpload';
+import DownloadIcon from '@mui/icons-material/Download';
 import Person3Icon from '@mui/icons-material/Person3';
 import Avatar from '@mui/material/Avatar';
 import logoDashboard from '../../images/hr-project.png'
@@ -88,10 +90,12 @@ const SidebarAdm = () => {
                                         <MenuItem component={<Link to="/admin/users" />} icon={<GroupAddIcon />}> Users </MenuItem>
                                         <MenuItem component={<Link to="/admin/jobs" />} icon={<WorkIcon />}> Jobs </MenuItem>
                                         <MenuItem component={<Link to="/admin/category" />} icon={<CategoryIcon />}> Category </MenuItem>
+                                        <MenuItem component={<Link to="/admin/downloads" />} icon={<DownloadIcon />}> Submissions </MenuItem>
                                     </> :
                                     <>
                                         <MenuItem component={<Link to="/user/dashboard" />} icon={<DashboardIcon />}> Dashboard </MenuItem>
                                         <MenuItem component={<Link to="/user/jobs" />} icon={<WorkHistoryIcon />}> Applied Jobs </MenuItem>
+                                        <MenuItem component={<Link to="/user/uploads" />} icon={ <FileUploadIcon />}> Resumes </MenuItem>
                                         <MenuItem component={<Link to="/user/info" />} icon={<Person3Icon />}> Personal Info </MenuItem>
                                     </>
                             }
