@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import AddIcon from '@mui/icons-material/Add';
 import { useDispatch, useSelector } from 'react-redux';
 import moment from 'moment'
-import { allUserAction } from '../../redux/actions/userAction';
+import { allUserAction, deleteSingleUserAction } from '../../redux/actions/userAction';
 
 const DashUsers = () => {
 
@@ -15,11 +15,18 @@ const DashUsers = () => {
         dispatch(allUserAction());
     }, []);
 
+    const {success: deleteSuccess} = useSelector(state => state.deleteUser);
     const { users, loading } = useSelector(state => state.allUsers);
     let data = [];
     data = (users !== undefined && users.length > 0) ? users : []
 
     const deleteUserById = (e, id) => {
+        if (window.confirm(`You really want to delete user ID: "${id}" ?`)){
+            dispatch(deleteSingleUserAction(id));
+            if (deleteSuccess && deleteSuccess === true){
+                dispatch(allUserAction())
+            }
+        }
         console.log(id);
     }
 
@@ -62,7 +69,7 @@ const DashUsers = () => {
             width: 200,
             renderCell: (values) => (
                 <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
-                    <Button variant="contained"><Link style={{ color: "white", textDecoration: "none" }} to={`/admin/edit/user/${values.row._id}`}>Edit</Link></ Button>
+                    {/* <Button variant="contained"><Link style={{ color: "white", textDecoration: "none" }} to={`/admin/edit/user/${values.row._id}`}>Edit</Link></ Button> */}
                     < Button onClick={(e) => deleteUserById(e, values.row._id)} variant="contained" color="error">Delete</ Button>
                 </Box>
             )

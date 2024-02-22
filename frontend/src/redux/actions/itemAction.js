@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { DOWNLOAD_ITEM_FAIL, DOWNLOAD_ITEM_REQUEST, DOWNLOAD_ITEM_SUCCESS, GET_ITEM_FAIL, GET_ITEM_REQUEST, GET_ITEM_SUCCESS, UPLOAD_ITEM_FAIL, UPLOAD_ITEM_REQUEST, UPLOAD_ITEM_SUCCESS } from "../constants/itemConstant";
+import { DELETE_ITEM_FAIL, DELETE_ITEM_REQUEST, DELETE_ITEM_SUCCESS, DOWNLOAD_ITEM_FAIL, DOWNLOAD_ITEM_REQUEST, DOWNLOAD_ITEM_SUCCESS, GET_ITEM_FAIL, GET_ITEM_REQUEST, GET_ITEM_SUCCESS, UPLOAD_ITEM_FAIL, UPLOAD_ITEM_REQUEST, UPLOAD_ITEM_SUCCESS } from "../constants/itemConstant";
 
 
 //file upload action
@@ -101,3 +101,22 @@ toast.success("File Downloaded Successfully");
     toast.error(error.response.data.error);
 }
 }
+
+//delete file action
+export const deleteSingleItemAction = (id) => async (dispatch) => {
+    dispatch({ type: DELETE_ITEM_REQUEST });
+    try {
+        const { data } = await axios.delete(`/api/item/delete/${id}`);
+        dispatch({
+            type: DELETE_ITEM_SUCCESS,
+            payload: data
+        });
+        toast.success("File deleted successfully");
+    } catch (error) {
+        dispatch({
+            type: DELETE_ITEM_FAIL,
+            payload: error.response.data.error
+        });
+        toast.error(error.response.data.error);
+    }
+  }

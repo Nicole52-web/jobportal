@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const itemSchema = new mongoose.Schema({
   name: {
@@ -11,6 +12,11 @@ const itemSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please provide a file"],
   },
+  user: {
+    type: ObjectId,
+    ref: "User",
+    required: true,
+  }
 }, {timestamps: true});
 
 module.exports = mongoose.model("Item", itemSchema);

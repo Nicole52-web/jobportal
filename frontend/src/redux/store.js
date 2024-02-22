@@ -3,9 +3,9 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import { deleteJobReducer, editJobReducer, loadJobReducer, loadJobSingleReducer, registerAjobReducer } from './reducers/jobReducers';
 import { createJobTypeReducer, deleteJobTypeReducer, loadJobTypeReducer, updateJobTypeReducer } from './reducers/jobTypeReducer';
-import { allUserReducer, userApplyJobReducer, userReducerContactPage, userReducerLogout, userReducerProfile, userReducerSignIn, userReducerSignUp } from './reducers/userReducer';
+import { allUserReducer, deleteUserReducer, userApplyJobReducer, userReducerContactPage, userReducerLogout, userReducerProfile, userReducerSignIn, userReducerSignUp } from './reducers/userReducer';
 import { modeReducer } from './reducers/themeModeReducer';
-import { downloadItemReducer, getItemsReducer, itemReducer } from './reducers/itemReducer';
+import { deleteItemReducer, downloadItemReducer, getItemsReducer, itemReducer } from './reducers/itemReducer';
 
 
 
@@ -25,12 +25,14 @@ const reducer = combineReducers({
     registerJob: registerAjobReducer,
     createJobType: createJobTypeReducer,
     deleteJob: deleteJobReducer,
+    deleteUser:deleteUserReducer,
     deleteCategory: deleteJobTypeReducer,
     editJob: editJobReducer,
     updateJobType: updateJobTypeReducer,
     uploadItem: itemReducer,
     getItems: getItemsReducer,
-    downloadItem: downloadItemReducer
+    downloadItem: downloadItemReducer,
+    deleteItem: deleteItemReducer
 });
 
 

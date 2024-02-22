@@ -3,7 +3,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid'
 import moment from 'moment'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { downloadItemAction, getItemsAction } from '../../redux/actions/itemAction'
+import { deleteSingleItemAction, downloadItemAction, getItemsAction } from '../../redux/actions/itemAction'
 
 
 
@@ -15,7 +15,7 @@ const DashDownload = () => {
     }, [dispatch]);
 
 
-
+    const {success: deleteSuccess} = useSelector(state => state.deleteItem);
     const { items, loading } = useSelector(state => state.getItems);
 
     let data = [];
@@ -26,6 +26,15 @@ const DashDownload = () => {
         dispatch(downloadItemAction(id));
     }
     
+    const deleteItemById = (e, id) => {
+        if (window.confirm(`You really want to delete item ID: "${id}" ?`)){
+            dispatch(deleteSingleItemAction(id));
+            if (deleteSuccess && deleteSuccess === true){
+                dispatch(getItemsAction())
+            }
+        }
+        console.log(id);
+    }
     const columns = [
 
         {
@@ -39,11 +48,11 @@ const DashDownload = () => {
             headerName: 'File name',
             width: 150,
         },
-        {
-            field: 'file',
-            headerName: 'File',
-            width: 150,
-        },
+        // {
+        //     field: 'file',
+        //     headerName: 'File',
+        //     width: 150,
+        // },
         {
             field: 'createdAt',
             headerName: 'Creation date',
@@ -52,12 +61,12 @@ const DashDownload = () => {
                 moment(params.row.createdAt).format('YYYY-MM-DD HH:MM:SS')
             )
         },
-        // {
-        //     field: 'user',
-        //     headerName: 'User',
-        //     width: 150,
-        //     valueGetter: (data) => data.row.user ? data.row.user.firstName : 'Unknown',
-        // },
+        {
+            field: 'user',
+            headerName: 'User',
+            width: 150,
+            valueGetter: (data) => data.row.user ? data.row.user.firstName : 'Unknown',
+        },
         // {
         //     field: 'email',
         //     headerName: 'Email',
@@ -70,8 +79,8 @@ const DashDownload = () => {
                  
                             <Box sx={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
                     
-                            <Button onClick = {() => handleDownload(values.row._id)} variant="contained" style={{ color: "white"}}>Download File</ Button>
-                
+                            <Button onClick = {() => handleDownload(values.row._id)} variant="contained" style={{ color: "white"}}>Download</ Button>
+                            < Button onClick={(e) => deleteItemById(e, values.row._id)} variant="contained" color="error">Delete</ Button>
                         </Box>
                          
             )

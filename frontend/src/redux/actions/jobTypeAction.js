@@ -68,11 +68,11 @@ export const deleteJobTypeAction = (type_id) => async (dispatch) => {
 }
 
 // update jobs category
-export const updateJobTypeAction = (type_id) => async (dispatch) => {
+export const updateJobTypeAction = (type_id, updateJobType) => async (dispatch) => {
     dispatch({ type: UPDATE_JOB_TYPE_REQUEST })
 
     try {
-        const { data } = await axios.put(`/api/type/update/${type_id}`);
+        const { data } = await axios.put(`/api/type/update/${type_id}`, updateJobType);
         dispatch({
             type: UPDATE_JOB_TYPE_SUCCESS,
             payload: data

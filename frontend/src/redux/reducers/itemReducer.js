@@ -1,4 +1,4 @@
-import { DOWNLOAD_ITEM_FAIL, DOWNLOAD_ITEM_REQUEST, DOWNLOAD_ITEM_RESET, DOWNLOAD_ITEM_SUCCESS, GET_ITEM_FAIL, GET_ITEM_REQUEST, GET_ITEM_RESET, GET_ITEM_SUCCESS, UPLOAD_ITEM_FAIL, UPLOAD_ITEM_REQUEST, UPLOAD_ITEM_RESET, UPLOAD_ITEM_SUCCESS } from "../constants/itemConstant";
+import { DELETE_ITEM_FAIL, DELETE_ITEM_REQUEST, DELETE_ITEM_RESET, DELETE_ITEM_SUCCESS, DOWNLOAD_ITEM_FAIL, DOWNLOAD_ITEM_REQUEST, DOWNLOAD_ITEM_RESET, DOWNLOAD_ITEM_SUCCESS, GET_ITEM_FAIL, GET_ITEM_REQUEST, GET_ITEM_RESET, GET_ITEM_SUCCESS, UPLOAD_ITEM_FAIL, UPLOAD_ITEM_REQUEST, UPLOAD_ITEM_RESET, UPLOAD_ITEM_SUCCESS } from "../constants/itemConstant";
 
 
 
@@ -51,6 +51,29 @@ export const downloadItemReducer = (state = {}, action) => {
             return { loading: false, error: action.payload };
         case DOWNLOAD_ITEM_RESET:
             return {};
+        default:
+            return state;
+    }
+}
+
+//delete file reducer
+export const deleteItemReducer = (state = {}, action) => {
+    switch (action.type) {
+        case DELETE_ITEM_REQUEST:
+            return { loading: true }
+        case DELETE_ITEM_SUCCESS:
+            return {
+                loading: false,
+                success: action.payload.success,
+                message: action.payload.message
+            }
+        case DELETE_ITEM_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+        case DELETE_ITEM_RESET:
+            return {}
         default:
             return state;
     }

@@ -18,12 +18,15 @@ import { userLogoutAction } from '../redux/actions/userAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleActionTheme } from '../redux/actions/themeAction';
 import { DarkMode, LightMode } from '@mui/icons-material'
+import { green } from '@mui/material/colors';
+
 
 const pages = [
-  <Link to="/" style={{ color: "black", textDecoration: "none"}}>Home</Link>,
-  <Link to="/login" style={{ color: "black", textDecoration: "none"}}>Log In</Link>,
-  <Link to="/register" style={{ color: "black", textDecoration: "none"}}>Sign Up</Link>,
-  <Link to="/contact" style={{ color: "black", textDecoration: "none"}}>Contact Us</Link>
+  
+  <Link to="/" style={{ color: green[600], textDecoration: "none"}}>Home</Link>,
+  <Link to="/login" style={{ color: green[600], textDecoration: "none"}}>Log In</Link>,
+  <Link to="/register" style={{ color: green[600], textDecoration: "none"}}>Sign Up</Link>,
+  <Link to="/contact" style={{ color: green[600],  textDecoration: "none"}}>Contact Us</Link>
 ];
 
 
